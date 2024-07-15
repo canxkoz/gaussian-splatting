@@ -42,7 +42,7 @@ class GaussianModel:
 
 
     def __init__(self, sh_degree : int):
-        self.active_sh_degree = sh_degree
+        self.active_sh_degree = 0
         self.max_sh_degree = sh_degree  
         self._xyz = torch.empty(0)
         self._features_dc = torch.empty(0)
@@ -118,7 +118,8 @@ class GaussianModel:
         return self.covariance_activation(self.get_scaling, scaling_modifier, self._rotation)
 
     def oneupSHdegree(self):
-        self.active_sh_degree = self.max_sh_degree
+        if self.active_sh_degree < self.max_sh_degree:
+            self.active_sh_degree += 1
 
     def create_from_pcd(self, pcd : BasicPointCloud, spatial_lr_scale : float):
         self.spatial_lr_scale = spatial_lr_scale

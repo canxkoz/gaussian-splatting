@@ -57,8 +57,11 @@ if __name__ == "__main__":
     parser.add_argument("--skip_train", action="store_true")
     parser.add_argument("--skip_test", action="store_true")
     parser.add_argument("--quiet", action="store_true")
+    parser.add_argument("--light_position", default=[0, 0, 0], type=float, nargs=3)
     args = get_combined_args(parser)
     print("Rendering " + args.model_path)
+
+    pipeline.light_position = torch.tensor(args.light_position, dtype=torch.float32, device="cuda")
 
     # Initialize system state (RNG)
     safe_state(args.quiet)
